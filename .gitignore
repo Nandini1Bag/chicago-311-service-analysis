@@ -205,3 +205,24 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# --- OS files ---
+.DS_Store
+
+# --- Project-specific ignores ---
+chicago311_env/
+logs/
+conf/
+
+# Ignore database files
+*.duckdb
+*.db
+
+# Ignore CSVs (but allow key benchmark ones)
+*.csv
+!duplicates_not_inserted.csv
+!benchmark_duckdb_results.csv
+!benchmark_results_duckdb.csv
+!benchmark_results_duckdb_long.csv
+duplicates_not_inserted.csv
+duplicates_not_inserted.csv
