@@ -1,0 +1,7 @@
+DB,Query,Execution_Time_sec,Rows
+DuckDB,count_requests_per_service,0.037927708000000004,110
+DuckDB,top_10_services,0.009240917000000015,10
+DuckDB,requests_per_department,0.013631583000000003,13
+DuckDB,requests_per_location,0.007250290999999964,1
+DuckDB,requests_by_month,0.12487941699999994,81
+DuckDB,join_service_department,0.09890062500000008,10

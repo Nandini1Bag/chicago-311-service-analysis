@@ -1,0 +1,64 @@
+--- Single Record ---
+sr_number                : SR18-00017648
+sr_type                  : Street Light Out Complaint
+sr_short_code            : SFD
+owner_department         : CDOT - Department of Transportation
+status                   : Completed
+origin                   : Phone Call
+created_date             : 2018-12-01T00:29:55.000
+last_modified_date       : 2020-02-13T16:54:45.000
+closed_date              : 2019-03-13T00:45:26.000
+street_address           : 4000 W ADDISON ST
+city                     : CHICAGO
+state                    : IL
+zip_code                 : 60641
+street_number            : 4000
+street_direction         : W
+street_name              : ADDISON
+street_type              : ST
+duplicate                : False
+legacy_record            : True
+legacy_sr_number         : CSR18-03263447
+community_area           : 16
+ward                     : 45
+electrical_district      : 3
+electricity_grid         : F013
+police_sector            : 3
+police_district          : 17
+police_beat              : 1732
+precinct                 : 4
+sanitation_division_days : Thursday
+created_hour             : 0
+created_day_of_week      : 4
+created_month            : None
+x_coordinate             : 1149055.621
+y_coordinate             : 1923639.942
+latitude                 : 41.94639867
+longitude                : -87.72752227
+location                 : {'latitude': '41.94639867', 'longitude': '-87.72752227'}
+parent_sr_number         : None
+created_department       : None
+
+
+
+
+------------------------------------------------------------------
+Let’s map the likely ETL flow from 12M raw rows → 2.85M fact rows. I’ll break it into steps, estimate row reductions, and explain the business logic at each stage.
+
+Step-by-Step ETL Flow with Row Reduction
+Step	Action / Transformation	Sample Count (Estimate)	Notes / Reasoning
+1	Raw ingestion: load raw_requests	12,375,892	All records from source system.
+2	Deduplication: remove exact duplicates, keep only one per request (duplicate = True removed)	~10,000,000	Deduplication reduces multiple updates/versions per SR.
+3	Status filtering: keep only Completed or Closed SRs	~5,000,000	Open, canceled, or invalid requests are filtered out.
+4	Legacy filtering: exclude legacy records or handle differently (legacy_record = True)	~4,000,000	Legacy SRs may not be part of analytical fact table.
+5	Parent-child aggregation: merge child SRs into parent SRs (parent_sr_number)	~3,000,000	Multiple related requests become one fact row.
+6	Location / FK mapping: map to dim_location, drop records with invalid/missing location	~2,850,000	Only rows with valid FK references to dimensions are kept.
+7	Final fact table load: insert into fact_requests	2,850,000	All null checks passed, referential integrity satisfied.
+
+
+
+6️⃣ Suggested Benchmark Table
+DB	ETL Load Time	Disk Usage	Query1 (count/service)	Query2 (top services)	Query3 (join fact-dim)
+MongoDB	xx sec	xx GB	xx ms	xx ms	xx ms
+PostgreSQL	xx sec	xx GB	xx ms	xx ms	xx ms
+DuckDB	xx sec	xx GB	xx ms	xx ms	xx ms

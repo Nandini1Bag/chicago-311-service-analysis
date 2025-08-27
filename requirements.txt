@@ -1,6 +1,19 @@
-pandas
-requests
-matplotlib
-seaborn
-geopandas
-jupyter
+# Core
+requests==2.32.3
+pandas==2.2.2
+python-dotenv==1.0.1
+tomli==2.0.1           # for reading config.toml (Python <3.11)
+toml==0.10.2           # explicit toml support for Python >=3.11
+
+# Database
+duckdb==1.1.0
+
+# ML + Benchmarking
+scikit-learn==1.5.1
+xgboost==2.1.1         # optional, for benchmarking
+
+# Utils
+notebook==7.2.1
+matplotlib==3.9.2
+seaborn==0.13.2
+tqdm==4.66.1

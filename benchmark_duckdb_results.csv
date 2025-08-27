@@ -1,0 +1,2 @@
+,count_requests_per_service,top_10_services,requests_per_department,requests_per_location,requests_by_month,join_service_department
+DuckDB,0.00887400000000002,0.006614625000000013,0.010110290999999993,0.00777300000000003,0.11833262499999997,0.09545562500000004
