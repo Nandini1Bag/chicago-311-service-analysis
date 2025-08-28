@@ -1,0 +1,17 @@
+# Use lightweight Python base image
+FROM python:3.11-slim
+
+# Set working directory
+WORKDIR /data
+
+# Install DuckDB and Pandas
+RUN pip install --no-cache-dir duckdb pandas
+
+# Copy database from host into the container
+COPY data/chicago_311.duckdb /data/chicago_311.duckdb
+
+# Copy benchmark script
+COPY data/benchmark_etl.py /data/benchmark_etl.py
+
+# Default command: start Python REPL
+CMD ["python3"]
