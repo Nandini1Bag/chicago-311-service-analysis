@@ -78,11 +78,10 @@ Adjust conf/config.toml for batch sizes, DB path, ETL debug mode, and time range
 
 Run ETL scripts inside the activated virtual environment:
 
-python src/etl/01_setup.py       # Drop & deduplicate raw requests
-python src/etl/02_dimensions.py  # Create & populate dimension tables
-python src/etl/03_fact_prepare.py # Prepare fact table with precomputed request_id
-python src/etl/04_fact_insert.py # Insert fact records in batches
-python src/etl/05_validate.py    # Sanity checks, counts, integrity
+python src/etl/01_setup_v2.py       # Drop & deduplicate raw requests
+python src/etl/02_dimensions_v2.py  # Create & populate dimension tables
+python src/etl/03_fact_preparev2.py # Prepare fact table  n Insert fact records in batches
+python src/etl/04_validate_v2.py    # Sanity checks, counts, integrity
 
 
 Use debug = true in conf/config.toml for small sample runs (~10 rows)
@@ -98,11 +97,10 @@ Add this target to your Makefile:
 etl-run:
 	source chicago311_env/bin/activate && \
 	pip install -r requirements.txt && \
-	python src/etl/01_setup.py && \
-	python src/etl/02_dimensions.py && \
-	python src/etl/03_fact_prepare.py && \
-	python src/etl/04_fact_insert.py && \
-	python src/etl/05_validate.py
+	python src/etl/01_setup_v2.py && \
+	python src/etl/02_dimensions_v2.py && \
+	python src/etl/03_fact_preparev2.py && \
+	python src/etl/04_validate_v2.py
 
 
 Run with:
